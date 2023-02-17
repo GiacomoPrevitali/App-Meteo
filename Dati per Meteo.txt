@@ -1,0 +1,21 @@
+ temperature_2m -->temperatura
+ relativehumidity_2m
+ apparent_temperature
+ pressure_msl    surface_pressure
+cloudcover_low
+ windspeed_10m
+ winddirection_10m
+ precipitation
+
+daily
+sunrise
+sunset
+Maximum Temperature (2 m)
+Minimum Temperature (2 m)
+Maximum Apparent Temperature (2 m)
+Minimum Apparent Temperature (2 m)
+
+
+
+
+https://api.open-meteo.com/v1/forecast?latitude=45.70&longitude=9.67&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FLondon&start_date=2023-02-17&end_date=2023-03-03
