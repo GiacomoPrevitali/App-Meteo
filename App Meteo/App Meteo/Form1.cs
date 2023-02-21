@@ -13,7 +13,8 @@ using System.Net.Http.Headers;
 //using System.Text.Json;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+//using System.Device.Location;
 
 
 namespace App_Meteo
@@ -63,17 +64,30 @@ namespace App_Meteo
         private void btn_Invia_Click(object sender, EventArgs e)
         {
        // Esegui();
-        Prova();
+        Prova(this);
+        //lbl_TempAttuale.Text=
             
         }
-        private void Prova()
+        private void Prova(Form1 myform)
         {
             using(WebClient webClient = new WebClient())
             {
-                string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=45.70&longitude=9.67&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FLondon&start_date=2023-02-17&end_date=2023-03-03");
+                string lat = "45.70";
+                string lon = "9.67";
+                string dataI = DateTime.Now.ToString("yyyy-MM-dd");
+
+                DateTime tmp=Convert.ToDateTime(dataI);
+
+               tmp = tmp.AddDays(14);
+                string dataF = tmp.ToString("yyyy-MM-dd");
+                MessageBox.Show(Convert.ToString(dataF));
+                MessageBox.Show(Convert.ToString(dataI));
+                string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FLondon&start_date="+dataI+"&end_date="+dataF);
                 var json =webClient.DownloadString(url);
                 Weather.root Rilevation=JsonConvert.DeserializeObject<Weather.root>(json);
-                MessageBox.Show("il giorno: "+Rilevation.hourly.time[1]+"ci sono: "+ Rilevation.hourly.temperature_2m[1]);
+                MessageBox.Show("il giorno: "+Rilevation.hourly.time[25]+"ci sono: "+ Rilevation.hourly.temperature_2m[25]);
+                //return Rilevation;
+                myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[1]);
 
             }
         }
@@ -130,11 +144,27 @@ public class Weather
 
     }
 
+    public class daily
+    {
+        public List<string> time { get; set; }
+        public List<float> temperature_2m_max { get; set; }
+        public List<float> temperature_2m_min { get; set; }
+        public List<float> apparent_temperature_max { get; set; }
+        public List<float> apparent_temperature_min { get; set; }
+        public List<string> sunrise { get; set; }
+        public List<string> sunset { get; set; }
+
+
+    }
+
     public class root
     {
         public gen gen { get; set; }
         public hourly hourly { get; set; }
         public hourly_units Hourly_units { get; set; }
+        public daily_units  daily_Units  {get; set;}
+        public daily daily { get; set; }
+    
     }
 }
 
