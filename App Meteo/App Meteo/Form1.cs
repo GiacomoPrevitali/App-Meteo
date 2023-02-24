@@ -63,12 +63,9 @@ namespace App_Meteo
 
         private void btn_Invia_Click(object sender, EventArgs e)
         {
-       // Esegui();
-        Prova(this);
-        //lbl_TempAttuale.Text=
-            
+        Rileva(this);   
         }
-        private void Prova(Form1 myform)
+        private void Rileva(Form1 myform)
         {
             using(WebClient webClient = new WebClient())
             {
@@ -80,15 +77,15 @@ namespace App_Meteo
 
                tmp = tmp.AddDays(14);
                 string dataF = tmp.ToString("yyyy-MM-dd");
-                MessageBox.Show(Convert.ToString(dataF));
-                MessageBox.Show(Convert.ToString(dataI));
                 string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FLondon&start_date="+dataI+"&end_date="+dataF);
                 var json =webClient.DownloadString(url);
                 Weather.root Rilevation=JsonConvert.DeserializeObject<Weather.root>(json);
-                MessageBox.Show("il giorno: "+Rilevation.hourly.time[25]+"ci sono: "+ Rilevation.hourly.temperature_2m[25]);
+                string datetime = DateTime.Now.ToString("HH");
+                int hour = Convert.ToInt32(datetime);
+               // MessageBox.Show("il giorno: "+Rilevation.hourly.time[hour] +"ci sono: "+ Rilevation.hourly.temperature_2m[hour]);
                 //return Rilevation;
-                myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[1]);
-
+                myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour]+"°C");
+                myform.lbl_minmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[0]+"°/"+ Rilevation.daily.temperature_2m_max[0]+"°");
             }
         }
     }

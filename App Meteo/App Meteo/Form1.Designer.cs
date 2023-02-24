@@ -30,6 +30,7 @@
         {
             this.btn_Invia = new System.Windows.Forms.Button();
             this.lbl_TempAttuale = new System.Windows.Forms.Label();
+            this.lbl_minmax = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_Invia
@@ -51,11 +52,21 @@
             this.lbl_TempAttuale.TabIndex = 1;
             this.lbl_TempAttuale.Text = "label1";
             // 
+            // lbl_minmax
+            // 
+            this.lbl_minmax.AutoSize = true;
+            this.lbl_minmax.Location = new System.Drawing.Point(338, 188);
+            this.lbl_minmax.Name = "lbl_minmax";
+            this.lbl_minmax.Size = new System.Drawing.Size(35, 13);
+            this.lbl_minmax.TabIndex = 2;
+            this.lbl_minmax.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbl_minmax);
             this.Controls.Add(this.lbl_TempAttuale);
             this.Controls.Add(this.btn_Invia);
             this.Name = "Form1";
@@ -69,6 +80,7 @@
 
         private System.Windows.Forms.Button btn_Invia;
         private System.Windows.Forms.Label lbl_TempAttuale;
+        private System.Windows.Forms.Label lbl_minmax;
     }
 }
 

@@ -66,3 +66,37 @@ C:\Users\giack\Desktop\Progetti\App-Meteo\App Meteo\App Meteo\obj\Debug\App Mete
 C:\Users\giack\Desktop\Progetti\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.CopyComplete
 C:\Users\giack\Desktop\Progetti\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.exe
 C:\Users\giack\Desktop\Progetti\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.pdb
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\App Meteo.exe.config
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\App Meteo.exe
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\App Meteo.pdb
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\Newtonsoft.Json.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Buffers.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Memory.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Net.Http.Json.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Text.Json.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.ValueTuple.dll
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Buffers.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Memory.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Net.Http.Json.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Text.Json.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\bin\Debug\System.ValueTuple.xml
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.AssemblyReference.cache
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.SuggestedBindingRedirects.cache
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App_Meteo.Form1.resources
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App_Meteo.Properties.Resources.resources
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.GenerateResource.cache
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.CoreCompileInputs.cache
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.csproj.CopyComplete
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.exe
+C:\Users\giack\Desktop\Scuola\TPS\App-Meteo\App Meteo\App Meteo\obj\Debug\App Meteo.pdb
