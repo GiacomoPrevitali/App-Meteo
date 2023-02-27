@@ -72,21 +72,31 @@ namespace App_Meteo
                 string lat = "45.70";
                 string lon = "9.67";
                 string dataI = DateTime.Now.ToString("yyyy-MM-dd");
+                //fare chiamate per qualità aria
+                //add probabilità preciitazioni
+                //https://open-meteo.com/en/docs/geocoding-api#geocoding_form
+                //https://open-meteo.com/en/docs/air-quality-api#api_form
+                DateTime tmp =Convert.ToDateTime(dataI);
 
-                DateTime tmp=Convert.ToDateTime(dataI);
-
-               tmp = tmp.AddDays(14);
+                tmp = tmp.AddDays(14);
                 string dataF = tmp.ToString("yyyy-MM-dd");
-                string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FLondon&start_date="+dataI+"&end_date="+dataF);
+                string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date="+dataI+"&end_date="+dataF);
                 var json =webClient.DownloadString(url);
                 Weather.root Rilevation=JsonConvert.DeserializeObject<Weather.root>(json);
                 string datetime = DateTime.Now.ToString("HH");
                 int hour = Convert.ToInt32(datetime);
-               // MessageBox.Show("il giorno: "+Rilevation.hourly.time[hour] +"ci sono: "+ Rilevation.hourly.temperature_2m[hour]);
-                //return Rilevation;
                 myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour]+"°C");
                 myform.lbl_minmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[0]+"°/"+ Rilevation.daily.temperature_2m_max[0]+"°");
-            }
+                myform.lbl_Percepita.Text = Convert.ToString(Rilevation.hourly.apparent_temperature[hour] + "°C");
+                myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour]+" mm");
+                string alba= Convert.ToString(Rilevation.daily.sunrise[0]);
+                myform.lbl_Alba.Text = alba.Substring(alba.Length - 5);
+                string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
+                myform.lbl_tramonto.Text = tramonto.Substring(tramonto.Length-5);
+                myform.lbl_Ivento.Text = Convert.ToString(Rilevation.hourly.windspeed_10m[hour]+" Km/h");
+                myform.lbl_Pressione.Text = Convert.ToString(Rilevation.hourly.surface_pressure[hour]* 0.000987);
+                myform.lbl_Umidita.Text = Convert.ToString(Rilevation.hourly.relativehumidity_2m[hour]+"%");
+            }   
         }
     }
 }
