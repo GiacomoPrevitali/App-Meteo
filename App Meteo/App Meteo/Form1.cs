@@ -73,6 +73,10 @@ namespace App_Meteo
         {
             using (WebClient webClient = new WebClient())
             {
+
+                string datetime = DateTime.Now.ToString("HH");
+                int hour = Convert.ToInt32(datetime);
+
                 string lat = "45.70";
                 string lon = "9.67";
                 string dataI = DateTime.Now.ToString("yyyy-MM-dd");
@@ -96,7 +100,7 @@ namespace App_Meteo
                 DateTime tmp = Convert.ToDateTime(dataI);
                 tmp = tmp.AddDays(14);
                 string dataF = tmp.ToString("yyyy-MM-dd");
-                url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,cloudcover,precipitation,surface_pressure,windspeed_10m,winddirection_10m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date=" + dataI + "&end_date=" + dataF);
+                url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,cloudcover,precipitation,surface_pressure,windspeed_10m,winddirection_10m,precipitation_probability,weathercode&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date=" + dataI + "&end_date=" + dataF);
                 json = webClient.DownloadString(url);
                 Weather.root Rilevation = JsonConvert.DeserializeObject<Weather.root>(json);
 
@@ -104,39 +108,106 @@ namespace App_Meteo
                 url = string.Format("https://air-quality-api.open-meteo.com/v1/air-quality?latitude="+lat+"&longitude="+lon+"&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&start_date="+dataI+"&end_date="+ dataI);
                 json = webClient.DownloadString(url);
                 AirQuality Air = JsonConvert.DeserializeObject<AirQuality>(json);
+                string cond="";
+               // Rilevation.hourly.weathercode[hour] = 81;
+                switch (Rilevation.hourly.weathercode[hour])
+                {
+                    case 0:
+                        cond = "Sereno";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Sereno.jpg");
+                        break;
+                    case 1: case 2: case 3:
+                        cond = "Parzialmente nuvoloso";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Parz_Nuv.jpg");
+                        break;
+                    case 45: case 48:
+                        cond = "Nebbioso";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Fog.jpg");
+                        break;
+                    case 51:
+                    case 53:
+                    case 55:
+                        cond = "Pioggerella";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/pioggerella.jpg");
+                        break;
+                    case 56:
+                    case 57:
+                        cond = "Pioviggine sopraffusa";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                        break;
+                    case 61:
+                    case 63:
+                    case 65:
+                        cond = "Pioggia";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                        break;
+                    case 66:
+                    case 67:
+                        cond = "Pioggia sopraffusa";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                        break;
+                    case 71:
+                    case 73:
+                    case 75:
+                        cond = "Neve";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Snow.jpg");
 
-                float angle = 100.5F;
-                Bitmap freccia = new Bitmap("../../../Foto/Freccia.png");
-              //  pictureBox1.Controls.Add(pictureBox1);
-                pictureBox1.Location = new Point(130, 109);
-                pictureBox1.Image = Freccia(freccia, angle);
-                pictureBox1.Image = freccia;
-               // pictureBox1.c
-                /*Image img = Image.FromFile("../../../Foto/Freccia.png");
-                Bitmap bitmap = new Bitmap(pictureBox1.Image.Width, pictureBox1.Image.Height);
-                Graphics g = Graphics.FromImage(bitmap);
+                        break;
+                    case 77:
+                        cond = "Nevischio";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/nevischio.jpg");
+
+                        break;
+                    case 80:
+                    case 81:
+                    case 82:
+                        cond = "Acquazzone";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                        break;
+                    case 85:
+                    case 86:
+                        cond = "Bufera di neve";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                        break;
+                    case 95:
+                    case 96:
+                    case 99:
+                        cond = "Temporale";
+                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                        break;
+                }
+                
+
+
+
               
-
-                g.RotateTransform(100F);
-                pictureBox1.Image = img;*/
-
-
-                string datetime = DateTime.Now.ToString("HH");
-                int hour = Convert.ToInt32(datetime);
                 myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour] + "°C");
-                myform.lbl_minmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
+                myform.lbl_minmax.Text = Convert.ToString(cond+" "+Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
 
                 myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
                 myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour] + " mm");
                 string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
-                myform.lbl_Alba.Text = alba.Substring(alba.Length - 5);
+                myform.lbl_Alba.Text = "Alba: " +alba.Substring(alba.Length - 5);
                 string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
-                myform.lbl_tramonto.Text = tramonto.Substring(tramonto.Length - 5);
+                myform.lbl_tramonto.Text = "Tramonto: "+tramonto.Substring(tramonto.Length - 5);
                 myform.lbl_Ivento.Text = Convert.ToString(Rilevation.hourly.windspeed_10m[hour] + " Km/h");
                 myform.lbl_Pressione.Text = Convert.ToString("Pressione " + Rilevation.hourly.surface_pressure[hour] + " mBar");
                 myform.lbl_Umidita.Text = Convert.ToString("Umidità " + Rilevation.hourly.relativehumidity_2m[hour] + "%");
                 myform.lbl_ProPrecipita.Text = Convert.ToString("Probabilità di pioggia " + Rilevation.hourly.precipitation_probability[hour] + "%");
-                MessageBox.Show(Convert.ToString(Air.hourly.pm10[hour]));
+                
+                myform.lbl_pm25.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
+                
+                myform.lbl_pm10.Text = Convert.ToString("PM10 " + Air.hourly.pm10[hour]);
+                myform.lbl_SO2.Text = Convert.ToString("SO2 " + Air.hourly.sulphur_dioxide[hour]);
+                myform.lbl_NO3.Text = Convert.ToString("NO2 " + Air.hourly.nitrogen_dioxide[hour]);
+                myform.lbl_Co.Text = Convert.ToString("CO " + Air.hourly.carbon_monoxide[hour]);
+                myform.lbl_O.Text = Convert.ToString("O3 " + Air.hourly.ozone[hour]);
+
+                myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
+                MessageBox.Show(Convert.ToString(Rilevation.hourly.weathercode[hour]));
             }
 
         }
@@ -153,8 +224,19 @@ namespace App_Meteo
             }
             return rotated;
         }
+
+        private void lbl_minmax_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_MouseClick(object sender, MouseEventArgs e)
+        {
+            Panel_Air.Visible = !Panel_Air.Visible;
+        }
     }
 }
+
 
 
 
@@ -171,7 +253,6 @@ public class AirQuality
     public Hourly_Units hourly_units { get; set; }
     public Hourly hourly { get; set; }
 }
-
 public class Hourly_Units
 {
     public string time { get; set; }
@@ -182,7 +263,6 @@ public class Hourly_Units
     public string sulphur_dioxide { get; set; }
     public string ozone { get; set; }
 }
-
 public class Hourly
 {
     public string[] time { get; set; }
@@ -248,6 +328,7 @@ public class Weather
         public string windspeed_10m { get; set; }
         public string winddirection_10m { get; set; }
         public string precipitation_probability { get; set; }
+        public string weathercode { get; set; }
 
     }
     public class hourly
@@ -262,6 +343,7 @@ public class Weather
         public List<float> windspeed_10m { get; set; }
         public List<int> winddirection_10m { get; set; }
         public List<string> precipitation_probability { get; set; }
+        public List<int> weathercode { get; set; }
     }
 
     public class daily_units
