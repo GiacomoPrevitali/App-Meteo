@@ -14,6 +14,8 @@ using System.Net.Http.Headers;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using System.Security.Cryptography.X509Certificates;
+using System.Drawing.Drawing2D;
 //using System.Device.Location;
 
 
@@ -27,47 +29,49 @@ namespace App_Meteo
             InitializeComponent();
         }
 
-      /*  static async Task Esegui()
-        {
-            client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.open-meteo.com");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        /*  static async Task Esegui()
+          {
+              client = new HttpClient();
+              client.BaseAddress = new Uri("https://api.open-meteo.com");
+              client.DefaultRequestHeaders.Accept.Clear();
+              client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            Weather.root Rilevation = new Weather.root();
-            Rilevation = null;
-            Rilevation = await GetAlbumAsync("/v1/forecast?latitude=45.70&longitude=9.67&hourly=temperature_2m");
-            MessageBox.Show(Convert.ToString(Rilevation.gen.latitude));
+              Weather.root Rilevation = new Weather.root();
+              Rilevation = null;
+              Rilevation = await GetAlbumAsync("/v1/forecast?latitude=45.70&longitude=9.67&hourly=temperature_2m");
+              MessageBox.Show(Convert.ToString(Rilevation.gen.latitude));
 
-        }
+          }
 
-        static async Task<Weather.root> GetAlbumAsync(string path)
-        {
-            Weather.root Rilevation= null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                 //Rilevation = await JsonSerializer.DeserializeAsync<Weather.root>(await response.Content.ReadAsStreamAsync());
-                Rilevation = JsonConvert.DeserializeObject<Weather.root>(Convert.ToString(response.Content.ReadAsStreamAsync()));
-            }
-            return Rilevation;
-            MessageBox.Show(Rilevation.hourly.time[0]);
-             Weather Rilevation = null;
-             HttpResponseMessage response = await client.GetAsync(path);
-             if (response.IsSuccessStatusCode)
-             {
-                 Rilevation = await JsonSerializer.DeserializeAsync<Weather>(await response.Content.ReadAsStreamAsync());
-             }
-             return Rilevation;
-        }*/
+          static async Task<Weather.root> GetAlbumAsync(string path)
+          {
+              Weather.root Rilevation= null;
+              HttpResponseMessage response = await client.GetAsync(path);
+              if (response.IsSuccessStatusCode)
+              {
+                   //Rilevation = await JsonSerializer.DeserializeAsync<Weather.root>(await response.Content.ReadAsStreamAsync());
+                  Rilevation = JsonConvert.DeserializeObject<Weather.root>(Convert.ToString(response.Content.ReadAsStreamAsync()));
+              }
+              return Rilevation;
+              MessageBox.Show(Rilevation.hourly.time[0]);
+               Weather Rilevation = null;
+               HttpResponseMessage response = await client.GetAsync(path);
+               if (response.IsSuccessStatusCode)
+               {
+                   Rilevation = await JsonSerializer.DeserializeAsync<Weather>(await response.Content.ReadAsStreamAsync());
+               }
+               return Rilevation;
+          }*/
 
         private void btn_Invia_Click(object sender, EventArgs e)
         {
-        Rileva(this);   
+            Rileva(this);
+            
+            
         }
         private void Rileva(Form1 myform)
         {
-            using(WebClient webClient = new WebClient())
+            using (WebClient webClient = new WebClient())
             {
                 string lat = "45.70";
                 string lon = "9.67";
@@ -76,30 +80,149 @@ namespace App_Meteo
                 //add probabilità preciitazioni
                 //https://open-meteo.com/en/docs/geocoding-api#geocoding_form
                 //https://open-meteo.com/en/docs/air-quality-api#api_form
-                DateTime tmp =Convert.ToDateTime(dataI);
 
+                //COORDINATE
+                string city = txt_City.Text;
+                string url = string.Format("https://geocoding-api.open-meteo.com/v1/search?name=" + city + "&count=1");
+                var json = webClient.DownloadString(url);
+                City Città = JsonConvert.DeserializeObject<City>(json);
+                //MessageBox.Show(Città.results[0].feature_code);
+                lat = Convert.ToString(Città.results[0].latitude).Replace(",", ".");
+                lon = Convert.ToString(Città.results[0].longitude).Replace(",", ".");
+                //MessageBox.Show(lat + " " + lon);
+
+
+                //RILEVAZIONI
+                DateTime tmp = Convert.ToDateTime(dataI);
                 tmp = tmp.AddDays(14);
                 string dataF = tmp.ToString("yyyy-MM-dd");
-                string url = string.Format("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date="+dataI+"&end_date="+dataF);
-                var json =webClient.DownloadString(url);
-                Weather.root Rilevation=JsonConvert.DeserializeObject<Weather.root>(json);
+                url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,cloudcover,precipitation,surface_pressure,windspeed_10m,winddirection_10m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date=" + dataI + "&end_date=" + dataF);
+                json = webClient.DownloadString(url);
+                Weather.root Rilevation = JsonConvert.DeserializeObject<Weather.root>(json);
+
+                //AIR
+                url = string.Format("https://air-quality-api.open-meteo.com/v1/air-quality?latitude="+lat+"&longitude="+lon+"&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&start_date="+dataI+"&end_date="+ dataI);
+                json = webClient.DownloadString(url);
+                AirQuality Air = JsonConvert.DeserializeObject<AirQuality>(json);
+
+                float angle = 100.5F;
+                Bitmap freccia = new Bitmap("../../../Foto/Freccia.png");
+              //  pictureBox1.Controls.Add(pictureBox1);
+                pictureBox1.Location = new Point(130, 109);
+                pictureBox1.Image = Freccia(freccia, angle);
+                pictureBox1.Image = freccia;
+               // pictureBox1.c
+                /*Image img = Image.FromFile("../../../Foto/Freccia.png");
+                Bitmap bitmap = new Bitmap(pictureBox1.Image.Width, pictureBox1.Image.Height);
+                Graphics g = Graphics.FromImage(bitmap);
+              
+
+                g.RotateTransform(100F);
+                pictureBox1.Image = img;*/
+
+
                 string datetime = DateTime.Now.ToString("HH");
                 int hour = Convert.ToInt32(datetime);
-                myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour]+"°C");
-                myform.lbl_minmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[0]+"°/"+ Rilevation.daily.temperature_2m_max[0]+"°");
-                myform.lbl_Percepita.Text = Convert.ToString(Rilevation.hourly.apparent_temperature[hour] + "°C");
-                myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour]+" mm");
-                string alba= Convert.ToString(Rilevation.daily.sunrise[0]);
+                myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour] + "°C");
+                myform.lbl_minmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
+
+                myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
+                myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour] + " mm");
+                string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
                 myform.lbl_Alba.Text = alba.Substring(alba.Length - 5);
                 string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
-                myform.lbl_tramonto.Text = tramonto.Substring(tramonto.Length-5);
-                myform.lbl_Ivento.Text = Convert.ToString(Rilevation.hourly.windspeed_10m[hour]+" Km/h");
-                myform.lbl_Pressione.Text = Convert.ToString(Rilevation.hourly.surface_pressure[hour]* 0.000987);
-                myform.lbl_Umidita.Text = Convert.ToString(Rilevation.hourly.relativehumidity_2m[hour]+"%");
-            }   
+                myform.lbl_tramonto.Text = tramonto.Substring(tramonto.Length - 5);
+                myform.lbl_Ivento.Text = Convert.ToString(Rilevation.hourly.windspeed_10m[hour] + " Km/h");
+                myform.lbl_Pressione.Text = Convert.ToString("Pressione " + Rilevation.hourly.surface_pressure[hour] + " mBar");
+                myform.lbl_Umidita.Text = Convert.ToString("Umidità " + Rilevation.hourly.relativehumidity_2m[hour] + "%");
+                myform.lbl_ProPrecipita.Text = Convert.ToString("Probabilità di pioggia " + Rilevation.hourly.precipitation_probability[hour] + "%");
+                MessageBox.Show(Convert.ToString(Air.hourly.pm10[hour]));
+            }
+
+        }
+        private Bitmap Freccia(Bitmap freccia, float angle)
+        {
+           
+            Bitmap rotated = new Bitmap(freccia.Width, freccia.Height);
+            using (Graphics g = Graphics.FromImage(rotated))
+            {
+                g.TranslateTransform(rotated.Width / 2, rotated.Height / 2);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-rotated.Width / 2, -rotated.Height / 2);
+                g.DrawImage(rotated, new Point(0, 0));
+            }
+            return rotated;
         }
     }
 }
+
+
+
+
+
+public class AirQuality
+{
+    public float latitude { get; set; }
+    public float longitude { get; set; }
+    public float generationtime_ms { get; set; }
+    public int utc_offset_seconds { get; set; }
+    public string timezone { get; set; }
+    public string timezone_abbreviation { get; set; }
+    public Hourly_Units hourly_units { get; set; }
+    public Hourly hourly { get; set; }
+}
+
+public class Hourly_Units
+{
+    public string time { get; set; }
+    public string pm10 { get; set; }
+    public string pm2_5 { get; set; }
+    public string carbon_monoxide { get; set; }
+    public string nitrogen_dioxide { get; set; }
+    public string sulphur_dioxide { get; set; }
+    public string ozone { get; set; }
+}
+
+public class Hourly
+{
+    public string[] time { get; set; }
+    public float[] pm10 { get; set; }
+    public float[] pm2_5 { get; set; }
+    public float[] carbon_monoxide { get; set; }
+    public float[] nitrogen_dioxide { get; set; }
+    public float[] sulphur_dioxide { get; set; }
+    public float[] ozone { get; set; }
+}
+
+
+
+public class City
+{
+    public Result[] results { get; set; }
+    public float generationtime_ms { get; set; }
+}
+public class Result
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public float latitude { get; set; }
+    public float longitude { get; set; }
+    public float elevation { get; set; }
+    public string feature_code { get; set; }
+    public string country_code { get; set; }
+    public int admin1_id { get; set; }
+    public int admin3_id { get; set; }
+    public int admin4_id { get; set; }
+    public string timezone { get; set; }
+    public int population { get; set; }
+    public string[] postcodes { get; set; }
+    public int country_id { get; set; }
+    public string country { get; set; }
+    public string admin1 { get; set; }
+    public string admin3 { get; set; }
+    public string admin4 { get; set; }
+}
+
 
 public class Weather
 {
@@ -119,11 +242,12 @@ public class Weather
         public string temperature_2m { get; set; }
         public string relativehumidity_2m { get; set; }
         public string apparent_temperature { get; set; }
+        public string cloudcover { get; set; }
         public string precipitation { get; set; }
         public string surface_pressure { get; set; }
-        public string cloudcover { get; set; }
         public string windspeed_10m { get; set; }
         public string winddirection_10m { get; set; }
+        public string precipitation_probability { get; set; }
 
     }
     public class hourly
@@ -132,11 +256,12 @@ public class Weather
         public List<float> temperature_2m { get; set; }
         public List<int> relativehumidity_2m { get; set; }
         public List<float> apparent_temperature { get; set; }
+        public List<int> cloudcover { get; set; }
         public List<float> precipitation { get; set; }
         public List<float> surface_pressure { get; set; }
-        public List<int> cloudcover { get; set; }
         public List<float> windspeed_10m { get; set; }
         public List<int> winddirection_10m { get; set; }
+        public List<string> precipitation_probability { get; set; }
     }
 
     public class daily_units
@@ -169,9 +294,9 @@ public class Weather
         public gen gen { get; set; }
         public hourly hourly { get; set; }
         public hourly_units Hourly_units { get; set; }
-        public daily_units  daily_Units  {get; set;}
+        public daily_units daily_Units { get; set; }
         public daily daily { get; set; }
-    
+
     }
 }
 
