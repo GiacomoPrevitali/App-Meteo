@@ -105,11 +105,11 @@ namespace App_Meteo
                 Weather.root Rilevation = JsonConvert.DeserializeObject<Weather.root>(json);
 
                 //AIR
-                url = string.Format("https://air-quality-api.open-meteo.com/v1/air-quality?latitude="+lat+"&longitude="+lon+"&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&start_date="+dataI+"&end_date="+ dataI);
+                url = string.Format("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + lat + "&longitude=" + lon + "&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&start_date=" + dataI + "&end_date=" + dataI);
                 json = webClient.DownloadString(url);
                 AirQuality Air = JsonConvert.DeserializeObject<AirQuality>(json);
-                string cond="";
-               // Rilevation.hourly.weathercode[hour] = 81;
+                string cond = "";
+                // Rilevation.hourly.weathercode[hour] = 81;
                 switch (Rilevation.hourly.weathercode[hour])
                 {
                     case 0:
@@ -179,27 +179,27 @@ namespace App_Meteo
 
                         break;
                 }
-                
 
 
 
-              
+
+
                 myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour] + "°C");
-                myform.lbl_minmax.Text = Convert.ToString(cond+" "+Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
+                myform.lbl_minmax.Text = Convert.ToString(cond + " " + Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
 
                 myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
                 myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour] + " mm");
                 string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
-                myform.lbl_Alba.Text = "Alba: " +alba.Substring(alba.Length - 5);
+                myform.lbl_Alba.Text = "Alba: " + alba.Substring(alba.Length - 5);
                 string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
-                myform.lbl_tramonto.Text = "Tramonto: "+tramonto.Substring(tramonto.Length - 5);
+                myform.lbl_tramonto.Text = "Tramonto: " + tramonto.Substring(tramonto.Length - 5);
                 myform.lbl_Ivento.Text = Convert.ToString(Rilevation.hourly.windspeed_10m[hour] + " Km/h");
                 myform.lbl_Pressione.Text = Convert.ToString("Pressione " + Rilevation.hourly.surface_pressure[hour] + " mBar");
                 myform.lbl_Umidita.Text = Convert.ToString("Umidità " + Rilevation.hourly.relativehumidity_2m[hour] + "%");
                 myform.lbl_ProPrecipita.Text = Convert.ToString("Probabilità di pioggia " + Rilevation.hourly.precipitation_probability[hour] + "%");
-                
+
                 myform.lbl_pm25.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
-                
+
                 myform.lbl_pm10.Text = Convert.ToString("PM10 " + Air.hourly.pm10[hour]);
                 myform.lbl_SO2.Text = Convert.ToString("SO2 " + Air.hourly.sulphur_dioxide[hour]);
                 myform.lbl_NO3.Text = Convert.ToString("NO2 " + Air.hourly.nitrogen_dioxide[hour]);
@@ -207,6 +207,15 @@ namespace App_Meteo
                 myform.lbl_O.Text = Convert.ToString("O3 " + Air.hourly.ozone[hour]);
 
                 myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
+
+                DateTime Today= DateTime.Today;
+                MessageBox.Show(Today.ToString("D"));
+
+                myform.lbl_Nminmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[1] + "°/" + Rilevation.daily.temperature_2m_max[1] + "°");
+                myform.lbl_Nminmax2.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[2] + "°/" + Rilevation.daily.temperature_2m_max[2] + "°");
+                myform.lbl_Nminmax3.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[3] + "°/" + Rilevation.daily.temperature_2m_max[3] + "°");
+                myform.lbl_Nminmax4.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[4] + "°/" + Rilevation.daily.temperature_2m_max[4] + "°");
+                myform.lbl_Nminmax5.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[5] + "°/" + Rilevation.daily.temperature_2m_max[5] + "°");
                 MessageBox.Show(Convert.ToString(Rilevation.hourly.weathercode[hour]));
             }
 
@@ -233,6 +242,11 @@ namespace App_Meteo
         private void panel4_MouseClick(object sender, MouseEventArgs e)
         {
             Panel_Air.Visible = !Panel_Air.Visible;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Rileva(this);
         }
     }
 }
