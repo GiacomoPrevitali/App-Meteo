@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Security.Cryptography.X509Certificates;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 //using System.Device.Location;
 
 
@@ -207,9 +208,15 @@ namespace App_Meteo
                 myform.lbl_O.Text = Convert.ToString("O3 " + Air.hourly.ozone[hour]);
 
                 myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
-
-                DateTime Today= DateTime.Today;
-                MessageBox.Show(Today.ToString("D"));
+                DateTime thisDay = DateTime.Today;
+                int day = thisDay.Day;
+                
+                for(int i=0; i <= 5; i++)
+                {
+                    DateTime dateValue = new DateTime(thisDay.Year, thisDay.Month, day+i);
+                   // Console.WriteLine(dateValue.ToString("ddd", new CultureInfo("fr-FR")));
+                    MessageBox.Show(dateValue.ToString("ddd"));
+                }
 
                 myform.lbl_Nminmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[1] + "°/" + Rilevation.daily.temperature_2m_max[1] + "°");
                 myform.lbl_Nminmax2.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[2] + "°/" + Rilevation.daily.temperature_2m_max[2] + "°");
