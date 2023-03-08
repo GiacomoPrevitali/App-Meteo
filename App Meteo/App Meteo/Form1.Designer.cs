@@ -43,6 +43,7 @@
             this.lbl_DirVento = new System.Windows.Forms.Label();
             this.txt_City = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Panel_Air = new System.Windows.Forms.Panel();
             this.lbl_O = new System.Windows.Forms.Label();
@@ -54,6 +55,11 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.lbl_qualitàAria = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_Nminmax5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -64,14 +70,9 @@
             this.lbl_Stato = new System.Windows.Forms.Label();
             this.lbl_Nminmax = new System.Windows.Forms.Label();
             this.lbl_Giorno = new System.Windows.Forms.Label();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Panel_Info.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.Panel_Air.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -81,7 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_Invia
@@ -96,10 +96,13 @@
             // 
             // lbl_TempAttuale
             // 
+            this.lbl_TempAttuale.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_TempAttuale.BackColor = System.Drawing.Color.Transparent;
             this.lbl_TempAttuale.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_TempAttuale.ForeColor = System.Drawing.Color.White;
-            this.lbl_TempAttuale.Location = new System.Drawing.Point(123, 90);
+            this.lbl_TempAttuale.Location = new System.Drawing.Point(156, 84);
             this.lbl_TempAttuale.Name = "lbl_TempAttuale";
             this.lbl_TempAttuale.Size = new System.Drawing.Size(176, 51);
             this.lbl_TempAttuale.TabIndex = 1;
@@ -107,11 +110,14 @@
             // 
             // lbl_minmax
             // 
+            this.lbl_minmax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_minmax.AutoSize = true;
             this.lbl_minmax.BackColor = System.Drawing.Color.Transparent;
             this.lbl_minmax.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_minmax.ForeColor = System.Drawing.Color.White;
-            this.lbl_minmax.Location = new System.Drawing.Point(139, 153);
+            this.lbl_minmax.Location = new System.Drawing.Point(94, 152);
             this.lbl_minmax.Name = "lbl_minmax";
             this.lbl_minmax.Size = new System.Drawing.Size(125, 25);
             this.lbl_minmax.TabIndex = 2;
@@ -237,6 +243,17 @@
             this.panel1.Size = new System.Drawing.Size(199, 72);
             this.panel1.TabIndex = 9;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::App_Meteo.Properties.Resources.download1;
+            this.pictureBox1.Location = new System.Drawing.Point(113, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(65, 66);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
@@ -262,7 +279,7 @@
             this.Panel_Air.Controls.Add(this.lbl_NO3);
             this.Panel_Air.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Panel_Air.ForeColor = System.Drawing.Color.White;
-            this.Panel_Air.Location = new System.Drawing.Point(74, 213);
+            this.Panel_Air.Location = new System.Drawing.Point(13, 256);
             this.Panel_Air.Name = "Panel_Air";
             this.Panel_Air.Size = new System.Drawing.Size(249, 226);
             this.Panel_Air.TabIndex = 11;
@@ -333,6 +350,7 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(200, 37);
             this.panel4.TabIndex = 12;
+            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             this.panel4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel4_MouseClick);
             // 
             // lbl_qualitàAria
@@ -343,6 +361,7 @@
             this.lbl_qualitàAria.Size = new System.Drawing.Size(45, 13);
             this.lbl_qualitàAria.TabIndex = 3;
             this.lbl_qualitàAria.Text = "pm 2.5";
+            this.lbl_qualitàAria.Click += new System.EventHandler(this.lbl_qualitàAria_Click);
             // 
             // panel3
             // 
@@ -368,6 +387,53 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(455, 236);
             this.panel3.TabIndex = 13;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Location = new System.Drawing.Point(11, 56);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 14;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(11, 100);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 13;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(11, 142);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 12;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(11, 184);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 11;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox2.Image = global::App_Meteo.Properties.Resources.Sole;
+            this.pictureBox2.Location = new System.Drawing.Point(11, 17);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(22, 22);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 10;
+            this.pictureBox2.TabStop = false;
             // 
             // label4
             // 
@@ -463,74 +529,20 @@
             // 
             this.lbl_Giorno.AutoSize = true;
             this.lbl_Giorno.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Giorno.Location = new System.Drawing.Point(36, 26);
+            this.lbl_Giorno.Location = new System.Drawing.Point(39, 26);
             this.lbl_Giorno.Name = "lbl_Giorno";
             this.lbl_Giorno.Size = new System.Drawing.Size(56, 13);
             this.lbl_Giorno.TabIndex = 0;
             this.lbl_Giorno.Text = "DOMANI";
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Location = new System.Drawing.Point(11, 56);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(19, 22);
-            this.pictureBox6.TabIndex = 14;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Location = new System.Drawing.Point(11, 100);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(19, 22);
-            this.pictureBox5.TabIndex = 13;
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Location = new System.Drawing.Point(11, 142);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(19, 22);
-            this.pictureBox4.TabIndex = 12;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Location = new System.Drawing.Point(11, 184);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(19, 22);
-            this.pictureBox3.TabIndex = 11;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Image = global::App_Meteo.Properties.Resources.Sole;
-            this.pictureBox2.Location = new System.Drawing.Point(11, 17);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(19, 22);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 10;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::App_Meteo.Properties.Resources.download1;
-            this.pictureBox1.Location = new System.Drawing.Point(113, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(65, 66);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(483, 736);
+            this.ClientSize = new System.Drawing.Size(475, 736);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.Panel_Air);
@@ -549,6 +561,7 @@
             this.Panel_Info.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.Panel_Air.ResumeLayout(false);
@@ -562,7 +575,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

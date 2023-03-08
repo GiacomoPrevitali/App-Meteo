@@ -30,45 +30,9 @@ namespace App_Meteo
             InitializeComponent();
         }
 
-        /*  static async Task Esegui()
-          {
-              client = new HttpClient();
-              client.BaseAddress = new Uri("https://api.open-meteo.com");
-              client.DefaultRequestHeaders.Accept.Clear();
-              client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-              Weather.root Rilevation = new Weather.root();
-              Rilevation = null;
-              Rilevation = await GetAlbumAsync("/v1/forecast?latitude=45.70&longitude=9.67&hourly=temperature_2m");
-              MessageBox.Show(Convert.ToString(Rilevation.gen.latitude));
-
-          }
-
-          static async Task<Weather.root> GetAlbumAsync(string path)
-          {
-              Weather.root Rilevation= null;
-              HttpResponseMessage response = await client.GetAsync(path);
-              if (response.IsSuccessStatusCode)
-              {
-                   //Rilevation = await JsonSerializer.DeserializeAsync<Weather.root>(await response.Content.ReadAsStreamAsync());
-                  Rilevation = JsonConvert.DeserializeObject<Weather.root>(Convert.ToString(response.Content.ReadAsStreamAsync()));
-              }
-              return Rilevation;
-              MessageBox.Show(Rilevation.hourly.time[0]);
-               Weather Rilevation = null;
-               HttpResponseMessage response = await client.GetAsync(path);
-               if (response.IsSuccessStatusCode)
-               {
-                   Rilevation = await JsonSerializer.DeserializeAsync<Weather>(await response.Content.ReadAsStreamAsync());
-               }
-               return Rilevation;
-          }*/
-
         private void btn_Invia_Click(object sender, EventArgs e)
         {
-            Rileva(this);
-            
-            
+            Rileva(this);  
         }
         private void Rileva(Form1 myform)
         {
@@ -81,17 +45,14 @@ namespace App_Meteo
                 string lat = "45.70";
                 string lon = "9.67";
                 string dataI = DateTime.Now.ToString("yyyy-MM-dd");
-                //fare chiamate per qualità aria
-                //add probabilità preciitazioni
-                //https://open-meteo.com/en/docs/geocoding-api#geocoding_form
-                //https://open-meteo.com/en/docs/air-quality-api#api_form
+
 
                 //COORDINATE
                 string city = txt_City.Text;
                 string url = string.Format("https://geocoding-api.open-meteo.com/v1/search?name=" + city + "&count=1");
                 var json = webClient.DownloadString(url);
                 City Città = JsonConvert.DeserializeObject<City>(json);
-                //MessageBox.Show(Città.results[0].feature_code);
+                MessageBox.Show(Città.results[0].latitude.ToString());
                 lat = Convert.ToString(Città.results[0].latitude).Replace(",", ".");
                 lon = Convert.ToString(Città.results[0].longitude).Replace(",", ".");
                 //MessageBox.Show(lat + " " + lon);
@@ -101,7 +62,7 @@ namespace App_Meteo
                 DateTime tmp = Convert.ToDateTime(dataI);
                 tmp = tmp.AddDays(14);
                 string dataF = tmp.ToString("yyyy-MM-dd");
-                url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,cloudcover,precipitation,surface_pressure,windspeed_10m,winddirection_10m,precipitation_probability,weathercode&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date=" + dataI + "&end_date=" + dataF);
+                url = string.Format("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,cloudcover,precipitation,surface_pressure,windspeed_10m,winddirection_10m,precipitation_probability,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=Europe%2FBerlin&start_date=" + dataI + "&end_date=" + dataF);
                 json = webClient.DownloadString(url);
                 Weather.root Rilevation = JsonConvert.DeserializeObject<Weather.root>(json);
 
@@ -110,7 +71,6 @@ namespace App_Meteo
                 json = webClient.DownloadString(url);
                 AirQuality Air = JsonConvert.DeserializeObject<AirQuality>(json);
                 string cond = "";
-                // Rilevation.hourly.weathercode[hour] = 81;
                 switch (Rilevation.hourly.weathercode[hour])
                 {
                     case 0:
@@ -214,8 +174,6 @@ namespace App_Meteo
                 for(int i=0; i <= 6; i++)
                 {
                     DateTime dateValue = new DateTime(thisDay.Year, thisDay.Month, day+i);
-                   // Console.WriteLine(dateValue.ToString("ddd", new CultureInfo("fr-FR")));
-                    //MessageBox.Show(dateValue.ToString("ddd"));
                     dayN[i] = dateValue.ToString("ddd");
                 }
                 myform.label1.Text = dayN[2].ToUpper();
@@ -228,8 +186,78 @@ namespace App_Meteo
                 myform.lbl_Nminmax3.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[3] + "°/" + Rilevation.daily.temperature_2m_max[3] + "°");
                 myform.lbl_Nminmax4.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[4] + "°/" + Rilevation.daily.temperature_2m_max[4] + "°");
                 myform.lbl_Nminmax5.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[5] + "°/" + Rilevation.daily.temperature_2m_max[5] + "°");
-               // MessageBox.Show(Convert.ToString(Rilevation.hourly.weathercode[hour]));
-               myform.pictureBox2.Image= Image.FromFile("../../../Foto/Sole.png");
+                myform.pictureBox2.Image = Image.FromFile("../../../Foto/Sole.png");
+                PictureBox[] p = new PictureBox[5];
+                p[0] = pictureBox2;
+                p[1] = pictureBox6;
+                p[2] = pictureBox5;
+                p[3] = pictureBox4;
+                p[4] = pictureBox3;
+                
+                for (int i=0; i < 5; i++)
+                {
+                    switch (Rilevation.daily.weathercode[i])
+                    {
+                        case 0:
+                            p[i].Image= Image.FromFile("../../../Foto/Sole.png");
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                            p[i].Image = Image.FromFile("../../../Foto/parz_nuv.png");
+                            break;
+                        case 45:
+                        case 48:
+                            p[i].Image = Image.FromFile("../../../Foto/Nuv.png");
+                            break;
+                        case 51:
+                        case 53:
+                        case 55:
+                            p[i].Image = Image.FromFile("../../../Foto/pioggerella.png");
+                            break;
+                        case 56:
+                        case 57:
+                            p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 61:
+                        case 63:
+                        case 65:
+                            p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 66:
+                        case 67:
+                            p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 71:
+                        case 73:
+                        case 75:
+                            p[i].Image = Image.FromFile("../../../Foto/neve.png");
+
+                            break;
+                        case 77:
+
+                            p[i].Image = Image.FromFile("../../../Foto/neve.png");
+
+                            break;
+                        case 80:
+                        case 81:
+                        case 82:
+                            p[i].Image = Image.FromFile("../../../Foto/Temp.png");
+
+                            break;
+                        case 85:
+                        case 86:
+                            p[i].Image = Image.FromFile("../../../Foto/NeveF.png");
+
+                            break;
+                        case 95:
+                        case 96:
+                        case 99:
+                            p[i].Image = Image.FromFile("../../../Foto/Temp.png");
+                            break;
+                    }
+                }
+                
             }
 
         }
@@ -255,11 +283,24 @@ namespace App_Meteo
         private void panel4_MouseClick(object sender, MouseEventArgs e)
         {
             Panel_Air.Visible = !Panel_Air.Visible;
+            Panel_Info.Visible= !Panel_Info.Visible;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Rileva(this);
+            this.ControlBox = false;
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lbl_qualitàAria_Click(object sender, EventArgs e)
+        {
+            Panel_Air.Visible = !Panel_Air.Visible;
+            Panel_Info.Visible= !Panel_Info.Visible;
         }
     }
 }
@@ -382,6 +423,7 @@ public class Weather
         public string apparent_temperature_min { get; set; }
         public string sunrise { get; set; }
         public string sunset { get; set; }
+        public string weathercode { get; set; }
 
     }
 
@@ -394,6 +436,7 @@ public class Weather
         public List<float> apparent_temperature_min { get; set; }
         public List<string> sunrise { get; set; }
         public List<string> sunset { get; set; }
+        public List<int> weathercode { get; set; }
 
 
     }
