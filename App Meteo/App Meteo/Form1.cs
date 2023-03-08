@@ -189,7 +189,7 @@ namespace App_Meteo
                 myform.lbl_minmax.Text = Convert.ToString(cond + " " + Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
 
                 myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
-                myform.lbl_precipitazioni.Text = Convert.ToString(Rilevation.hourly.precipitation[hour] + " mm");
+                myform.lbl_precipitazioni.Text = Convert.ToString("Precipitazioni "+Rilevation.hourly.precipitation[hour] + " mm");
                 string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
                 myform.lbl_Alba.Text = "Alba: " + alba.Substring(alba.Length - 5);
                 string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
@@ -210,20 +210,26 @@ namespace App_Meteo
                 myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
                 DateTime thisDay = DateTime.Today;
                 int day = thisDay.Day;
-                
-                for(int i=0; i <= 5; i++)
+                string[] dayN = new string[7];
+                for(int i=0; i <= 6; i++)
                 {
                     DateTime dateValue = new DateTime(thisDay.Year, thisDay.Month, day+i);
                    // Console.WriteLine(dateValue.ToString("ddd", new CultureInfo("fr-FR")));
-                    MessageBox.Show(dateValue.ToString("ddd"));
+                    //MessageBox.Show(dateValue.ToString("ddd"));
+                    dayN[i] = dateValue.ToString("ddd");
                 }
+                myform.label1.Text = dayN[2].ToUpper();
+                myform.label2.Text = dayN[3].ToUpper();
+                myform.lbl_Stato.Text = dayN[4].ToUpper();
+                myform.label4.Text = dayN[5].ToUpper();
 
                 myform.lbl_Nminmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[1] + "°/" + Rilevation.daily.temperature_2m_max[1] + "°");
                 myform.lbl_Nminmax2.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[2] + "°/" + Rilevation.daily.temperature_2m_max[2] + "°");
                 myform.lbl_Nminmax3.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[3] + "°/" + Rilevation.daily.temperature_2m_max[3] + "°");
                 myform.lbl_Nminmax4.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[4] + "°/" + Rilevation.daily.temperature_2m_max[4] + "°");
                 myform.lbl_Nminmax5.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[5] + "°/" + Rilevation.daily.temperature_2m_max[5] + "°");
-                MessageBox.Show(Convert.ToString(Rilevation.hourly.weathercode[hour]));
+               // MessageBox.Show(Convert.ToString(Rilevation.hourly.weathercode[hour]));
+               myform.pictureBox2.Image= Image.FromFile("../../../Foto/Sole.png");
             }
 
         }

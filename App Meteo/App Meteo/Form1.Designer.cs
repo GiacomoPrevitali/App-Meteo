@@ -43,7 +43,6 @@
             this.lbl_DirVento = new System.Windows.Forms.Label();
             this.txt_City = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Panel_Air = new System.Windows.Forms.Panel();
             this.lbl_O = new System.Windows.Forms.Label();
@@ -55,7 +54,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.lbl_qualitàAria = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_Nminmax5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,13 +64,24 @@
             this.lbl_Stato = new System.Windows.Forms.Label();
             this.lbl_Nminmax = new System.Windows.Forms.Label();
             this.lbl_Giorno = new System.Windows.Forms.Label();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Panel_Info.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.Panel_Air.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_Invia
@@ -90,7 +99,7 @@
             this.lbl_TempAttuale.BackColor = System.Drawing.Color.Transparent;
             this.lbl_TempAttuale.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_TempAttuale.ForeColor = System.Drawing.Color.White;
-            this.lbl_TempAttuale.Location = new System.Drawing.Point(160, 86);
+            this.lbl_TempAttuale.Location = new System.Drawing.Point(123, 90);
             this.lbl_TempAttuale.Name = "lbl_TempAttuale";
             this.lbl_TempAttuale.Size = new System.Drawing.Size(176, 51);
             this.lbl_TempAttuale.TabIndex = 1;
@@ -228,17 +237,6 @@
             this.panel1.Size = new System.Drawing.Size(199, 72);
             this.panel1.TabIndex = 9;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::App_Meteo.Properties.Resources.download1;
-            this.pictureBox1.Location = new System.Drawing.Point(113, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(65, 66);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
@@ -264,9 +262,9 @@
             this.Panel_Air.Controls.Add(this.lbl_NO3);
             this.Panel_Air.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Panel_Air.ForeColor = System.Drawing.Color.White;
-            this.Panel_Air.Location = new System.Drawing.Point(225, 45);
+            this.Panel_Air.Location = new System.Drawing.Point(74, 213);
             this.Panel_Air.Name = "Panel_Air";
-            this.Panel_Air.Size = new System.Drawing.Size(249, 233);
+            this.Panel_Air.Size = new System.Drawing.Size(249, 226);
             this.Panel_Air.TabIndex = 11;
             this.Panel_Air.Visible = false;
             // 
@@ -348,7 +346,13 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label5);
+            this.panel3.BackColor = System.Drawing.Color.Transparent;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.pictureBox6);
+            this.panel3.Controls.Add(this.pictureBox5);
+            this.panel3.Controls.Add(this.pictureBox4);
+            this.panel3.Controls.Add(this.pictureBox3);
+            this.panel3.Controls.Add(this.pictureBox2);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.lbl_Nminmax5);
             this.panel3.Controls.Add(this.label2);
@@ -362,115 +366,171 @@
             this.panel3.ForeColor = System.Drawing.Color.White;
             this.panel3.Location = new System.Drawing.Point(12, 488);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(732, 224);
+            this.panel3.Size = new System.Drawing.Size(455, 236);
             this.panel3.TabIndex = 13;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(36, 107);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "DOMANI";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 149);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(39, 193);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 13);
+            this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "DOMANI";
             // 
             // lbl_Nminmax5
             // 
             this.lbl_Nminmax5.AutoSize = true;
-            this.lbl_Nminmax5.Location = new System.Drawing.Point(400, 191);
+            this.lbl_Nminmax5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nminmax5.Location = new System.Drawing.Point(384, 193);
             this.lbl_Nminmax5.Name = "lbl_Nminmax5";
-            this.lbl_Nminmax5.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Nminmax5.Size = new System.Drawing.Size(41, 13);
             this.lbl_Nminmax5.TabIndex = 8;
             this.lbl_Nminmax5.Text = "label5";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 191);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(39, 109);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "DOMANI";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 63);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(39, 65);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
+            this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "DOMANI";
             // 
             // lbl_Nminmax2
             // 
             this.lbl_Nminmax2.AutoSize = true;
-            this.lbl_Nminmax2.Location = new System.Drawing.Point(400, 63);
+            this.lbl_Nminmax2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nminmax2.Location = new System.Drawing.Point(384, 65);
             this.lbl_Nminmax2.Name = "lbl_Nminmax2";
-            this.lbl_Nminmax2.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Nminmax2.Size = new System.Drawing.Size(41, 13);
             this.lbl_Nminmax2.TabIndex = 5;
             this.lbl_Nminmax2.Text = "label2";
             // 
             // lbl_Nminmax3
             // 
             this.lbl_Nminmax3.AutoSize = true;
-            this.lbl_Nminmax3.Location = new System.Drawing.Point(400, 107);
+            this.lbl_Nminmax3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nminmax3.Location = new System.Drawing.Point(384, 109);
             this.lbl_Nminmax3.Name = "lbl_Nminmax3";
-            this.lbl_Nminmax3.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Nminmax3.Size = new System.Drawing.Size(41, 13);
             this.lbl_Nminmax3.TabIndex = 4;
             this.lbl_Nminmax3.Text = "label2";
             // 
             // lbl_Nminmax4
             // 
             this.lbl_Nminmax4.AutoSize = true;
-            this.lbl_Nminmax4.Location = new System.Drawing.Point(400, 149);
+            this.lbl_Nminmax4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nminmax4.Location = new System.Drawing.Point(384, 151);
             this.lbl_Nminmax4.Name = "lbl_Nminmax4";
-            this.lbl_Nminmax4.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Nminmax4.Size = new System.Drawing.Size(41, 13);
             this.lbl_Nminmax4.TabIndex = 3;
             this.lbl_Nminmax4.Text = "label2";
             // 
             // lbl_Stato
             // 
             this.lbl_Stato.AutoSize = true;
-            this.lbl_Stato.Location = new System.Drawing.Point(129, 24);
+            this.lbl_Stato.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Stato.Location = new System.Drawing.Point(39, 151);
             this.lbl_Stato.Name = "lbl_Stato";
-            this.lbl_Stato.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Stato.Size = new System.Drawing.Size(56, 13);
             this.lbl_Stato.TabIndex = 2;
-            this.lbl_Stato.Text = "label3";
+            this.lbl_Stato.Text = "DOMANI";
             // 
             // lbl_Nminmax
             // 
             this.lbl_Nminmax.AutoSize = true;
-            this.lbl_Nminmax.Location = new System.Drawing.Point(400, 24);
+            this.lbl_Nminmax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nminmax.Location = new System.Drawing.Point(384, 26);
             this.lbl_Nminmax.Name = "lbl_Nminmax";
-            this.lbl_Nminmax.Size = new System.Drawing.Size(35, 13);
+            this.lbl_Nminmax.Size = new System.Drawing.Size(41, 13);
             this.lbl_Nminmax.TabIndex = 1;
             this.lbl_Nminmax.Text = "label2";
             // 
             // lbl_Giorno
             // 
             this.lbl_Giorno.AutoSize = true;
-            this.lbl_Giorno.Location = new System.Drawing.Point(39, 24);
+            this.lbl_Giorno.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Giorno.Location = new System.Drawing.Point(36, 26);
             this.lbl_Giorno.Name = "lbl_Giorno";
-            this.lbl_Giorno.Size = new System.Drawing.Size(50, 13);
+            this.lbl_Giorno.Size = new System.Drawing.Size(56, 13);
             this.lbl_Giorno.TabIndex = 0;
             this.lbl_Giorno.Text = "DOMANI";
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Location = new System.Drawing.Point(11, 56);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(19, 22);
+            this.pictureBox6.TabIndex = 14;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(11, 100);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(19, 22);
+            this.pictureBox5.TabIndex = 13;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(11, 142);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(19, 22);
+            this.pictureBox4.TabIndex = 12;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(11, 184);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(19, 22);
+            this.pictureBox3.TabIndex = 11;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox2.Image = global::App_Meteo.Properties.Resources.Sole;
+            this.pictureBox2.Location = new System.Drawing.Point(11, 17);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(19, 22);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 10;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::App_Meteo.Properties.Resources.download1;
+            this.pictureBox1.Location = new System.Drawing.Point(113, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(65, 66);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(918, 736);
+            this.ClientSize = new System.Drawing.Size(483, 736);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.Panel_Air);
@@ -481,6 +541,7 @@
             this.Controls.Add(this.lbl_minmax);
             this.Controls.Add(this.lbl_TempAttuale);
             this.Controls.Add(this.btn_Invia);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -488,7 +549,6 @@
             this.Panel_Info.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.Panel_Air.ResumeLayout(false);
@@ -497,6 +557,12 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -537,11 +603,15 @@
         private System.Windows.Forms.Label lbl_Nminmax2;
         private System.Windows.Forms.Label lbl_Nminmax3;
         private System.Windows.Forms.Label lbl_Nminmax4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbl_Nminmax5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
