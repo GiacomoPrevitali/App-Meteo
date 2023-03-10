@@ -257,9 +257,90 @@ namespace App_Meteo
                             break;
                     }
                 }
-                
+
+                PictureBox[] p1 = new PictureBox[4];
+                p1[0] = pictureBox7;
+                p1[1] = pictureBox10;
+                p1[2] = pictureBox9;
+                p1[3] = pictureBox8;
+                int j = hour;
+                for (int i = 0; i < 4; i++)
+                {
+                    switch (Rilevation.hourly.weathercode[j])
+                    {
+                        case 0:
+                            p1[i].Image = Image.FromFile("../../../Foto/Sole.png");
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                            p1[i].Image = Image.FromFile("../../../Foto/parz_nuv.png");
+                            break;
+                        case 45:
+                        case 48:
+                            p1[i].Image = Image.FromFile("../../../Foto/Nuv.png");
+                            break;
+                        case 51:
+                        case 53:
+                        case 55:
+                            p1[i].Image = Image.FromFile("../../../Foto/pioggerella.png");
+                            break;
+                        case 56:
+                        case 57:
+                            p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 61:
+                        case 63:
+                        case 65:
+                            p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 66:
+                        case 67:
+                            p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                            break;
+                        case 71:
+                        case 73:
+                        case 75:
+                            p1[i].Image = Image.FromFile("../../../Foto/neve.png");
+
+                            break;
+                        case 77:
+
+                            p1[i].Image = Image.FromFile("../../../Foto/neve.png");
+
+                            break;
+                        case 80:
+                        case 81:
+                        case 82:
+                            p1[i].Image = Image.FromFile("../../../Foto/Temp.png");
+
+                            break;
+                        case 85:
+                        case 86:
+                            p1[i].Image = Image.FromFile("../../../Foto/NeveF.png");
+
+                            break;
+                        case 95:
+                        case 96:
+                        case 99:
+                            p1[i].Image = Image.FromFile("../../../Foto/Temp.png");
+                            break;
+                    }
+                    j = j + 3;
+                }
+                myform.label3.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 3] + "°C");
+                myform.label7.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 6] + "°C");
+                myform.label6.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 9] + "°C");
+                myform.label5.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 12] + "°C");
+
+                myform.label11.Text = Convert.ToString((Convert.ToInt32(datetime)+3) + ":00");
+                myform.label8.Text = Convert.ToString((Convert.ToInt32(datetime) + 6) + ":00");
+                myform.label9.Text = Convert.ToString((Convert.ToInt32(datetime) + 9) + ":00");
+                myform.label10.Text = Convert.ToString((Convert.ToInt32(datetime) + 12) + ":00");
             }
 
+
+          
         }
         private Bitmap Freccia(Bitmap freccia, float angle)
         {
@@ -301,6 +382,18 @@ namespace App_Meteo
         {
             Panel_Air.Visible = !Panel_Air.Visible;
             Panel_Info.Visible= !Panel_Info.Visible;
+        }
+
+        private void panel3_Click(object sender, EventArgs e)
+        {
+            panel3.Visible = !panel3.Visible;
+            panel5.Visible = !panel5.Visible;
+        }
+
+        private void panel5_Click_1(object sender, EventArgs e)
+        {
+            panel3.Visible = !panel3.Visible;
+            panel5.Visible = !panel5.Visible;
         }
     }
 }
