@@ -129,6 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="image.ico" />
+    <None Include="Resources\lente2.png" />
+    <None Include="Resources\lente1.png" />
+    <None Include="Resources\images.png" />
+    <None Include="Resources\lente.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

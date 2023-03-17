@@ -62,9 +62,9 @@ namespace App_Meteo
                         lon = Convert.ToString(Città.results[0].longitude).Replace(",", ".");
                     }
 
-                    
-                   
 
+
+                    label15.Text = Città.results[0].name;
 
 
 
@@ -366,19 +366,6 @@ namespace App_Meteo
 
 
         }
-        private Bitmap Freccia(Bitmap freccia, float angle)
-        {
-           
-            Bitmap rotated = new Bitmap(freccia.Width, freccia.Height);
-            using (Graphics g = Graphics.FromImage(rotated))
-            {
-                g.TranslateTransform(rotated.Width / 2, rotated.Height / 2);
-                g.RotateTransform(angle);
-                g.TranslateTransform(-rotated.Width / 2, -rotated.Height / 2);
-                g.DrawImage(rotated, new Point(0, 0));
-            }
-            return rotated;
-        }
 
         private void lbl_minmax_Click(object sender, EventArgs e)
         {
@@ -388,6 +375,7 @@ namespace App_Meteo
         private void Form1_Load(object sender, EventArgs e)
         {
             Rileva(this);
+            pictureBox12.Image= Image.FromFile("../../../Foto/lente.png");
 
         }
 
@@ -395,7 +383,6 @@ namespace App_Meteo
         {
 
         }
-
     }
 }
 
