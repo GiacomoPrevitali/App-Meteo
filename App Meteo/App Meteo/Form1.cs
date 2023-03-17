@@ -15,6 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Security.Cryptography.X509Certificates;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace App_Meteo
@@ -30,6 +31,13 @@ namespace App_Meteo
         private void btn_Invia_Click(object sender, EventArgs e)
         {
             Rileva(this);  
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Rileva(this);
+            btn_Invia.BackgroundImageLayout = ImageLayout.Zoom;
+            btn_Invia.FlatAppearance.BorderSize = 0;
+
         }
         private void Rileva(Form1 myform)
         {
@@ -48,26 +56,17 @@ namespace App_Meteo
                     //COORDINATE
                     string city = txt_City.Text;
                     string url = string.Format("https://geocoding-api.open-meteo.com/v1/search?name=" + city + "&count=1");
-
                     var json = webClient.DownloadString(url);
                     City Città = JsonConvert.DeserializeObject<City>(json);
-                    if (Città.results == null) {
+                    if (Città.results == null) 
+                    {
                         MessageBox.Show("Luogo non trovato", "ERRORE", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                     else
                     {
-                      
                         lat = Convert.ToString(Città.results[0].latitude).Replace(",", ".");
                         lon = Convert.ToString(Città.results[0].longitude).Replace(",", ".");
                     }
-
-
-
-                    label15.Text = Città.results[0].name;
-
-
-
 
 
                     //RILEVAZIONI
@@ -82,307 +81,250 @@ namespace App_Meteo
                     url = string.Format("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + lat + "&longitude=" + lon + "&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&start_date=" + dataI + "&end_date=" + dataI);
                     json = webClient.DownloadString(url);
                     AirQuality Air = JsonConvert.DeserializeObject<AirQuality>(json);
+
                     string cond = "";
-               
-                    switch (Rilevation.hourly.weathercode[hour])
-                {
-                    case 0:
-                        cond = "Sereno";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Sereno.jpg");
-                        break;
-                    case 1:
-                    case 2:
-                    case 3:
-                        cond = "Parzialmente nuvoloso";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Parz_Nuv.jpg");
-                        break;
-                    case 45:
-                    case 48:
-                        cond = "Nebbioso";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Fog.jpg");
-                        break;
-                    case 51:
-                    case 53:
-                    case 55:
-                        cond = "Pioggerella";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/pioggerella.jpg");
-                        break;
-                    case 56:
-                    case 57:
-                        cond = "Pioviggine sopraffusa";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
-                        break;
-                    case 61:
-                    case 63:
-                    case 65:
-                        cond = "Pioggia";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
-                        break;
-                    case 66:
-                    case 67:
-                        cond = "Pioggia sopraffusa";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
-                        break;
-                    case 71:
-                    case 73:
-                    case 75:
-                        cond = "Neve";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Snow.jpg");
+                    cond=Sfondo(Rilevation.hourly.weathercode[hour], this);
 
-                        break;
-                    case 77:
-                        cond = "Nevischio";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/nevischio.jpg");
-
-                        break;
-                    case 80:
-                    case 81:
-                    case 82:
-                        cond = "Acquazzone";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
-
-                        break;
-                    case 85:
-                    case 86:
-                        cond = "Bufera di neve";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
-
-                        break;
-                    case 95:
-                    case 96:
-                    case 99:
-                        cond = "Temporale";
-                        myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
-
-                        break;
-                }
-              
-
-
-
-
-                    myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour] + "°C");
-                    myform.lbl_minmax.Text = Convert.ToString(cond + " " + Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
-
-                    myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
-                    myform.lbl_precipitazioni.Text = Convert.ToString("Precipitazioni " + Rilevation.hourly.precipitation[hour] + " mm");
-                    string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
-
-                    string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
-                    myform.lbl_Alba.Text = "Alba:               " + alba.Substring(alba.Length - 5);
-                    myform.lbl_tramonto.Text = "Tramonto:        " + tramonto.Substring(tramonto.Length - 5);
-                    myform.lbl_Ivento.Text = Convert.ToString("Vento "+Rilevation.hourly.windspeed_10m[hour] + " Km/h     "+ Rilevation.hourly.winddirection_10m[hour] +"°");
-                    myform.lbl_Pressione.Text = Convert.ToString("Pressione " + Rilevation.hourly.surface_pressure[hour] + " mBar");
-                    myform.lbl_Umidita.Text = Convert.ToString("Umidità " + Rilevation.hourly.relativehumidity_2m[hour] + "%");
-                    myform.lbl_ProPrecipita.Text = Convert.ToString("Probabilità di pioggia " + Rilevation.hourly.precipitation_probability[hour] + "%");
-
-                    myform.lbl_pm25.Text = Convert.ToString("PM2.5           " + Air.hourly.pm2_5[hour]);
-                    myform.lbl_pm10.Text = Convert.ToString("PM10            " + Air.hourly.pm10[hour]);
-                    myform.lbl_SO2.Text = Convert.ToString("SO2              " + Air.hourly.sulphur_dioxide[hour]);
-                    myform.lbl_NO3.Text = Convert.ToString("NO2              " + Air.hourly.nitrogen_dioxide[hour]);
-                    myform.lbl_Co.Text = Convert.ToString("CO                " + Air.hourly.carbon_monoxide[hour]);
-                    myform.lbl_O.Text = Convert.ToString("O3                 " + Air.hourly.ozone[hour]);
-
-                    myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
-                    DateTime thisDay = DateTime.Today;
-                    int day = thisDay.Day;
-                    string[] dayN = new string[7];
-                    for (int i = 0; i <= 6; i++)
+                    //LAYOUT
+                    if (Città.results != null)
                     {
-                        DateTime dateValue = new DateTime(thisDay.Year, thisDay.Month, day + i);
-                        dayN[i] = dateValue.ToString("ddd");
-                    }
-                    myform.label1.Text = dayN[2].ToUpper();
-                    myform.label2.Text = dayN[3].ToUpper();
-                    myform.lbl_Stato.Text = dayN[4].ToUpper();
-                    myform.label4.Text = dayN[5].ToUpper();
+                        myform.label15.Text = Città.results[0].name;
+                        myform.lbl_TempAttuale.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour] + "°C");
+                        myform.lbl_minmax.Text = Convert.ToString(cond + " " + Rilevation.daily.temperature_2m_min[0] + "°/" + Rilevation.daily.temperature_2m_max[0] + "°");
 
-                    myform.lbl_Nminmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[1] + "°/" + Rilevation.daily.temperature_2m_max[1] + "°");
-                    myform.lbl_Nminmax2.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[2] + "°/" + Rilevation.daily.temperature_2m_max[2] + "°");
-                    myform.lbl_Nminmax3.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[3] + "°/" + Rilevation.daily.temperature_2m_max[3] + "°");
-                    myform.lbl_Nminmax4.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[4] + "°/" + Rilevation.daily.temperature_2m_max[4] + "°");
-                    myform.lbl_Nminmax5.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[5] + "°/" + Rilevation.daily.temperature_2m_max[5] + "°");
-                    myform.pictureBox2.Image = Image.FromFile("../../../Foto/Sole.png");
-                    PictureBox[] p = new PictureBox[5];
-                    p[0] = pictureBox2;
-                    p[1] = pictureBox6;
-                    p[2] = pictureBox5;
-                    p[3] = pictureBox4;
-                    p[4] = pictureBox3;
+                        myform.lbl_Percepita.Text = Convert.ToString("Percepita " + Rilevation.hourly.apparent_temperature[hour] + "°C");
+                        myform.lbl_precipitazioni.Text = Convert.ToString("Precipitazioni " + Rilevation.hourly.precipitation[hour] + " mm");
+                        string alba = Convert.ToString(Rilevation.daily.sunrise[0]);
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        switch (Rilevation.daily.weathercode[i])
+                        string tramonto = Convert.ToString(Rilevation.daily.sunset[0]);
+                        myform.lbl_Alba.Text = "Alba:               " + alba.Substring(alba.Length - 5);
+                        myform.lbl_tramonto.Text = "Tramonto:        " + tramonto.Substring(tramonto.Length - 5);
+                        myform.lbl_Ivento.Text = Convert.ToString("Vento " + Rilevation.hourly.windspeed_10m[hour] + " Km/h     " + Rilevation.hourly.winddirection_10m[hour] + "°");
+                        myform.lbl_Pressione.Text = Convert.ToString("Pressione " + Rilevation.hourly.surface_pressure[hour] + " mBar");
+                        myform.lbl_Umidita.Text = Convert.ToString("Umidità " + Rilevation.hourly.relativehumidity_2m[hour] + "%");
+                        myform.lbl_ProPrecipita.Text = Convert.ToString("Probabilità di pioggia " + Rilevation.hourly.precipitation_probability[hour] + "%");
+
+                        myform.lbl_pm25.Text = Convert.ToString("PM2.5           " + Air.hourly.pm2_5[hour]);
+                        myform.lbl_pm10.Text = Convert.ToString("PM10            " + Air.hourly.pm10[hour]);
+                        myform.lbl_SO2.Text = Convert.ToString("SO2              " + Air.hourly.sulphur_dioxide[hour]);
+                        myform.lbl_NO3.Text = Convert.ToString("NO2              " + Air.hourly.nitrogen_dioxide[hour]);
+                        myform.lbl_Co.Text = Convert.ToString("CO                " + Air.hourly.carbon_monoxide[hour]);
+                        myform.lbl_O.Text = Convert.ToString("O3                 " + Air.hourly.ozone[hour]);
+
+                        myform.lbl_qualitàAria.Text = Convert.ToString("PM2.5 " + Air.hourly.pm2_5[hour]);
+                        DateTime thisDay = DateTime.Today;
+                        int day = thisDay.Day;
+                        string[] dayN = new string[7];
+                        for (int i = 0; i <= 6; i++)
                         {
-                            case 0:
-                                p[i].Image = Image.FromFile("../../../Foto/Sole.png");
-                                break;
-                            case 1:
-                            case 2:
-                            case 3:
-                                p[i].Image = Image.FromFile("../../../Foto/parz_nuv.png");
-                                break;
-                            case 45:
-                            case 48:
-                                p[i].Image = Image.FromFile("../../../Foto/Nuv.png");
-                                break;
-                            case 51:
-                            case 53:
-                            case 55:
-                                p[i].Image = Image.FromFile("../../../Foto/pioggerella.png");
-                                break;
-                            case 56:
-                            case 57:
-                                p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 61:
-                            case 63:
-                            case 65:
-                                p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 66:
-                            case 67:
-                                p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 71:
-                            case 73:
-                            case 75:
-                                p[i].Image = Image.FromFile("../../../Foto/neve.png");
-
-                                break;
-                            case 77:
-
-                                p[i].Image = Image.FromFile("../../../Foto/neve.png");
-
-                                break;
-                            case 80:
-                            case 81:
-                            case 82:
-                                p[i].Image = Image.FromFile("../../../Foto/Temp.png");
-
-                                break;
-                            case 85:
-                            case 86:
-                                p[i].Image = Image.FromFile("../../../Foto/NeveF.png");
-
-                                break;
-                            case 95:
-                            case 96:
-                            case 99:
-                                p[i].Image = Image.FromFile("../../../Foto/Temp.png");
-                                break;
+                            DateTime dateValue = new DateTime(thisDay.Year, thisDay.Month, day + i);
+                            dayN[i] = dateValue.ToString("ddd");
                         }
-                    }
+                        myform.label1.Text = dayN[2].ToUpper();
+                        myform.label2.Text = dayN[3].ToUpper();
+                        myform.lbl_Stato.Text = dayN[4].ToUpper();
+                        myform.label4.Text = dayN[5].ToUpper();
 
-                    PictureBox[] p1 = new PictureBox[5];
-                    p1[0] = pictureBox7;
-                    p1[1] = pictureBox10;
-                    p1[2] = pictureBox9;
-                    p1[3] = pictureBox8;
-                    p1[4] = pictureBox11;
-                    int j = hour;
-                    for (int i = 0; i < p1.Length; i++)
-                    {
-                        switch (Rilevation.hourly.weathercode[j])
+                        myform.lbl_Nminmax.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[1] + "°/" + Rilevation.daily.temperature_2m_max[1] + "°");
+                        myform.lbl_Nminmax2.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[2] + "°/" + Rilevation.daily.temperature_2m_max[2] + "°");
+                        myform.lbl_Nminmax3.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[3] + "°/" + Rilevation.daily.temperature_2m_max[3] + "°");
+                        myform.lbl_Nminmax4.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[4] + "°/" + Rilevation.daily.temperature_2m_max[4] + "°");
+                        myform.lbl_Nminmax5.Text = Convert.ToString(Rilevation.daily.temperature_2m_min[5] + "°/" + Rilevation.daily.temperature_2m_max[5] + "°");
+                        myform.pictureBox2.Image = Image.FromFile("../../../Foto/Sole.png");
+
+
+                        //Daily
+                        PictureBox[] p = new PictureBox[5];
+                        p[0] = pictureBox2;
+                        p[1] = pictureBox6;
+                        p[2] = pictureBox5;
+                        p[3] = pictureBox4;
+                        p[4] = pictureBox3;
+                        for (int i = 0; i < 5; i++)
                         {
-                            case 0:
-                                p1[i].Image = Image.FromFile("../../../Foto/Sole.png");
-                                break;
-                            case 1:
-                            case 2:
-                            case 3:
-                                p1[i].Image = Image.FromFile("../../../Foto/parz_nuv.png");
-                                break;
-                            case 45:
-                            case 48:
-                                p1[i].Image = Image.FromFile("../../../Foto/Nuv.png");
-                                break;
-                            case 51:
-                            case 53:
-                            case 55:
-                                p1[i].Image = Image.FromFile("../../../Foto/pioggerella.png");
-                                break;
-                            case 56:
-                            case 57:
-                                p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 61:
-                            case 63:
-                            case 65:
-                                p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 66:
-                            case 67:
-                                p1[i].Image = Image.FromFile("../../../Foto/pioggia.png");
-                                break;
-                            case 71:
-                            case 73:
-                            case 75:
-                                p1[i].Image = Image.FromFile("../../../Foto/neve.png");
-
-                                break;
-                            case 77:
-
-                                p1[i].Image = Image.FromFile("../../../Foto/neve.png");
-
-                                break;
-                            case 80:
-                            case 81:
-                            case 82:
-                                p1[i].Image = Image.FromFile("../../../Foto/Temp.png");
-
-                                break;
-                            case 85:
-                            case 86:
-                                p1[i].Image = Image.FromFile("../../../Foto/NeveF.png");
-
-                                break;
-                            case 95:
-                            case 96:
-                            case 99:
-                                p1[i].Image = Image.FromFile("../../../Foto/Temp.png");
-                                break;
+                            Icone(p, Rilevation.daily.weathercode[i], i);
                         }
-                        j = j + 3;
-                    }
-                    myform.label3.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 3] + "°C");
-                    myform.label7.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 6] + "°C");
-                    myform.label6.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 9] + "°C");
-                    myform.label5.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 12] + "°C");
-                    myform.label13.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 15] + "°C");
+                        myform.label3.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 3] + "°C");
+                        myform.label7.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 6] + "°C");
+                        myform.label6.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 9] + "°C");
+                        myform.label5.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 12] + "°C");
+                        myform.label13.Text = Convert.ToString(Rilevation.hourly.temperature_2m[hour + 15] + "°C");
 
-                    myform.label11.Text = Convert.ToString((Convert.ToInt32(datetime) + 3) % 24 + ":00");
-                    myform.label8.Text = Convert.ToString((Convert.ToInt32(datetime) + 6) % 24 + ":00");
-                    myform.label9.Text = Convert.ToString((Convert.ToInt32(datetime) + 9) % 24 + ":00");
-                    myform.label10.Text = Convert.ToString((Convert.ToInt32(datetime) + 12) % 24 + ":00");
-                    myform.label12.Text = Convert.ToString((Convert.ToInt32(datetime) + 15) % 24 + ":00");
+                        //Hourly
+                        PictureBox[] p1 = new PictureBox[5];
+                        p1[0] = pictureBox7;
+                        p1[1] = pictureBox10;
+                        p1[2] = pictureBox9;
+                        p1[3] = pictureBox8;
+                        p1[4] = pictureBox11;
+                        int j = hour;
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Icone(p1, Rilevation.hourly.weathercode[j], i);
+                            j = j + 3;
+                        }
+
+                        myform.label11.Text = Convert.ToString((Convert.ToInt32(datetime) + 3) % 24 + ":00");
+                        myform.label8.Text = Convert.ToString((Convert.ToInt32(datetime) + 6) % 24 + ":00");
+                        myform.label9.Text = Convert.ToString((Convert.ToInt32(datetime) + 9) % 24 + ":00");
+                        myform.label10.Text = Convert.ToString((Convert.ToInt32(datetime) + 12) % 24 + ":00");
+                        myform.label12.Text = Convert.ToString((Convert.ToInt32(datetime) + 15) % 24 + ":00");
+                    }
                 }
                 catch
                 {
-                    MessageBox.Show("Luogo non trovato");
+                    MessageBox.Show("ERRORE, Riprovare!","ERRORE", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-
-
         }
-
-        private void lbl_minmax_Click(object sender, EventArgs e)
+        private void Icone(PictureBox[] p, int code, int i)
         {
+            switch (code)
+            {
+                case 0:
+                    p[i].Image = Image.FromFile("../../../Foto/Sole.png");
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    p[i].Image = Image.FromFile("../../../Foto/parz_nuv.png");
+                    break;
+                case 45:
+                case 48:
+                    p[i].Image = Image.FromFile("../../../Foto/Nuv.png");
+                    break;
+                case 51:
+                case 53:
+                case 55:
+                    p[i].Image = Image.FromFile("../../../Foto/pioggerella.png");
+                    break;
+                case 56:
+                case 57:
+                    p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                    break;
+                case 61:
+                case 63:
+                case 65:
+                    p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                    break;
+                case 66:
+                case 67:
+                    p[i].Image = Image.FromFile("../../../Foto/pioggia.png");
+                    break;
+                case 71:
+                case 73:
+                case 75:
+                    p[i].Image = Image.FromFile("../../../Foto/neve.png");
 
+                    break;
+                case 77:
+
+                    p[i].Image = Image.FromFile("../../../Foto/neve.png");
+
+                    break;
+                case 80:
+                case 81:
+                case 82:
+                    p[i].Image = Image.FromFile("../../../Foto/Temp.png");
+
+                    break;
+                case 85:
+                case 86:
+                    p[i].Image = Image.FromFile("../../../Foto/NeveF.png");
+
+                    break;
+                case 95:
+                case 96:
+                case 99:
+                    p[i].Image = Image.FromFile("../../../Foto/Temp.png");
+                    break;
+            }
+        }
+        private string Sfondo(int code, Form1 myform)
+        {
+            string cond="";
+            switch (code)
+            {
+                case 0:
+                    cond = "Sereno";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Sereno.jpg");
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    cond = "Parzialmente nuvoloso";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Parz_Nuv.jpg");
+                    break;
+                case 45:
+                case 48:
+                    cond = "Nebbioso";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Fog.jpg");
+                    break;
+                case 51:
+                case 53:
+                case 55:
+                    cond = "Pioggerella";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/pioggerella.jpg");
+                    break;
+                case 56:
+                case 57:
+                    cond = "Pioviggine sopraffusa";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                    break;
+                case 61:
+                case 63:
+                case 65:
+                    cond = "Pioggia";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                    break;
+                case 66:
+                case 67:
+                    cond = "Pioggia sopraffusa";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Rain.jpg");
+                    break;
+                case 71:
+                case 73:
+                case 75:
+                    cond = "Neve";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/Snow.jpg");
+
+                    break;
+                case 77:
+                    cond = "Nevischio";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/nevischio.jpg");
+
+                    break;
+                case 80:
+                case 81:
+                case 82:
+                    cond = "Acquazzone";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                    break;
+                case 85:
+                case 86:
+                    cond = "Bufera di neve";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                    break;
+                case 95:
+                case 96:
+                case 99:
+                    cond = "Temporale";
+                    myform.BackgroundImage = Image.FromFile("../../../Foto/Sfondi/acquazzone.jpg");
+
+                    break;
+            }
+            return cond;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void pictureBox12_Click(object sender, EventArgs e)
         {
             Rileva(this);
-            pictureBox12.Image= Image.FromFile("../../../Foto/lente.png");
-
         }
 
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
     }
 }
 
@@ -422,9 +364,6 @@ public class Hourly
     public float[] sulphur_dioxide { get; set; }
     public float[] ozone { get; set; }
 }
-
-
-
 public class City
 {
     public Result[] results { get; set; }
@@ -451,8 +390,6 @@ public class Result
     public string admin3 { get; set; }
     public string admin4 { get; set; }
 }
-
-
 public class Weather
 {
     public class gen

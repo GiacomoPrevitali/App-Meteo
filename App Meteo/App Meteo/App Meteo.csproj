@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="image.ico" />
+    <None Include="Resources\lente4.png" />
+    <None Include="Resources\lente3.png" />
     <None Include="Resources\lente2.png" />
     <None Include="Resources\lente1.png" />
     <None Include="Resources\images.png" />
